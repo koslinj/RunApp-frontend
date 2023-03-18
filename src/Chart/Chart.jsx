@@ -13,42 +13,35 @@ function Chart() {
         const all = res.data;
         const bartek = all.filter((el) => el.name === "Bartek").sort((a,b) => a.kilometers-b.kilometers);
         const janek = all.filter((el) => el.name === "Janek").sort((a,b) => a.kilometers-b.kilometers);
-        setBartekData(bartek);
-        console.log(bartek);
-        setJanekData(janek);
-        console.log(janek);
+        handleFilter(bartek,setBartekData)
+        handleFilter(janek,setJanekData)
       }).catch((err) => {
         console.log(err);
       })
   }, [])
 
+  function handleFilter(data,func) {
+    const seenKilometers = {};
+    const filteredData = [];
 
-  // function findByKilometers(el, n) {
-  //   if (el.kilometers === n) {
-  //     if (el.name === "Janek") {
-  //       setChartData(prevData => {
-  //         return prevData.map(obj => {
-  //           if (obj.name === n + "km") {
-  //             const x = { ...obj, janek: el.paceInSeconds }
-  //             return x;
-  //           }
-  //           else return obj;
-  //         });
-  //       });
-  //     }
-  //     else {
-  //       setChartData(prevData => {
-  //         return prevData.map(obj => {
-  //           if (obj.name === n + "km") {
-  //             const x = { ...obj, bartek: el.paceInSeconds }
-  //             return x;
-  //           }
-  //           else return obj;
-  //         });
-  //       });
-  //     }
-  //   }
-  // }
+    for (const obj of data) {
+      if (!(obj.kilometers in seenKilometers)) {
+        filteredData.push(obj);
+        seenKilometers[obj.kilometers] = obj.paceInSeconds;
+      } else {
+        if (obj.paceInSeconds < seenKilometers[obj.kilometers]) {
+          filteredData.splice(
+            filteredData.findIndex(x => x.kilometers === obj.kilometers),
+            1,
+            obj
+          );
+          seenKilometers[obj.kilometers] = obj.paceInSeconds;
+        }
+      }
+    }
+    console.log(filteredData)
+    func(filteredData);
+  }
 
   return (
     <div className="bg-white rounded-lg max-w-2xl mx-auto mt-12 py-6 shadow-1">
@@ -62,7 +55,7 @@ function Chart() {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis label={{ value: 'Rodzaj Biegu', position: 'bottom', offset: '-6' }} dataKey="kilometers" allowDuplicatedCategory={false} type="number" tickFormatter={(x) => x+"km"}/>
+          <XAxis label={{ value: 'Rodzaj Biegu', position: 'bottom', offset: '-6' }} dataKey="kilometers" domain={['dataMin', 'dataMax']} type="number" tickFormatter={(x) => x+"km"}/>
           <YAxis label={{ value: 'Tempo', angle: -90, position: 'left', offset: '-10' }} type='number' domain={['dataMin', 'dataMax']} tickCount={8} tickFormatter={(x) => Math.floor(x / 60) + ":" + String(x % 60).padStart(2, '0')} />
           <Tooltip name="lol" formatter={(value) => Math.floor(value / 60) + ":" + String(value % 60).padStart(2, '0')} labelFormatter={(x) => x+"km"} />
           <Legend verticalAlign='top' />
