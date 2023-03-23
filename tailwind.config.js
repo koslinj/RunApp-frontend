@@ -4,7 +4,10 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        '1': '0px 0px 40px 0px rgba(255, 0, 255, 0.5)',
+        '1': '0px 0px 20px 5px rgba(255, 0, 255, 0.5)',
+      },
+      colors: {
+        'my-magenta': 'rgba(255, 0, 255, 0.5)',
       }
     },
   },
