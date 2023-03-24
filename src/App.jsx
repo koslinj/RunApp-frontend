@@ -21,7 +21,7 @@ function App() {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:3003/api/runs')
+    axios.get('/runs')
       .then((res) => {
         const all = res.data;
         setRuns(all);
