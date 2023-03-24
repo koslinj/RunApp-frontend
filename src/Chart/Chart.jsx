@@ -13,7 +13,7 @@ function Chart(props) {
     const janek = all.filter((el) => el.name === "Janek").sort((a, b) => a.kilometers - b.kilometers);
     handleFilter(bartek, setBartekData)
     handleFilter(janek, setJanekData)
-  }, [])
+  }, [props.data])
 
 
   function handleFilter(data, func) {

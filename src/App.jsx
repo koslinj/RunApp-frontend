@@ -2,7 +2,7 @@ import runLogo from "./img/running.svg"
 import plusLogo from "./img/plus.svg"
 import Chart from "./Chart/Chart";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "./axios";
 import NewRun from "./NewRun/NewRun";
 
 function App() {
@@ -10,14 +10,14 @@ function App() {
   const [chosen, setChosen] = useState(null)
   const [runs, setRuns] = useState(null)
 
-  function chooseBartek(){
+  function chooseBartek() {
     setAdding(true);
-    setChosen("bartek");
+    setChosen("Bartek");
   }
 
-  function chooseJanek(){
+  function chooseJanek() {
     setAdding(true);
-    setChosen("janek");
+    setChosen("Janek");
   }
 
   useEffect(() => {
@@ -34,21 +34,24 @@ function App() {
     const all_runs = [...runs];
 
     try {
-        const res = await axios.post('/runs', r);
-        const new_run = res.data;
-        console.log(r, new_run);
+      const res = await axios.post('/runs', r);
+      const new_run = res.data;
+      console.log(r, new_run);
 
-        all_runs.push(new_run);
-        setRuns(all_runs);
+      all_runs.push(new_run);
+      setRuns(all_runs);
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
+  }
 
-}
+  function hideNewRun(){
+    setAdding(false);
+  }
 
   return (
     <>
-      <div className="mt-6 p-4 max-w-sm mx-auto bg-white rounded-xl shadow-1 flex items-center space-x-4">
+      <div className="mt-6 p-3 max-w-sm mx-auto bg-white rounded-xl shadow-1 flex items-center space-x-4">
         <div className="shrink-0">
           <img className="h-16 w-16" src={runLogo} alt="Running stickman" />
         </div>
@@ -57,8 +60,8 @@ function App() {
           <p className="flex justify-center text-slate-500">Bartoszek vs Jasiel</p>
         </div>
       </div>
-      {runs? <Chart data={runs} onAdd={addRun}/> : <div className="text-white mt-6 p-4 max-w-sm mx-auto">Loading...</div>}
-      {adding ? <NewRun who={chosen}/> :
+      {runs ? <Chart data={runs} /> : <div className="text-white mt-6 p-4 max-w-sm mx-auto">Loading...</div>}
+      {adding ? <NewRun onAdd={addRun} who={chosen} hide={hideNewRun} /> :
         (
           <div className="bg-white mx-auto max-w-sm mt-6 rounded-lg p-6 px-12 flex justify-between shadow-1">
             <div className="flex flex-col items-center">
