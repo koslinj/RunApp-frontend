@@ -41,7 +41,7 @@ function Chart(props) {
 
   return (
     <div className="bg-white rounded-lg max-w-2xl mx-auto mt-6 py-6 shadow-1">
-      <ResponsiveContainer width="100%" height={500}>
+      <ResponsiveContainer width="100%" height={400}>
         <LineChart
           margin={{
             top: 5,

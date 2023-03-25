@@ -63,7 +63,7 @@ function App() {
       {runs ? <Chart data={runs} /> : <div className="text-white mt-6 p-4 max-w-sm mx-auto">Loading...</div>}
       {adding ? <NewRun onAdd={addRun} who={chosen} hide={hideNewRun} /> :
         (
-          <div className="bg-white mx-auto max-w-sm mt-6 rounded-lg p-6 px-12 flex justify-between shadow-1">
+          <div className="bg-white h-52 mx-auto max-w-sm my-6 rounded-lg p-6 px-12 flex items-center justify-between shadow-1">
             <div className="flex flex-col items-center">
               <button onClick={chooseBartek} className="bg-my-magenta hover:scale-125 duration-300 w-24 h-24 rounded-full flex items-center justify-center">
                 <img className="h-16 w-16 text-white" src={plusLogo} alt="Plus sign" />
