@@ -20,7 +20,7 @@ function NewRun(props) {
     }
 
     return (
-        <div className="bg-white h-52 max-w-lg mx-auto my-6 p-3 flex flex-col items-center rounded-xl shadow-1">
+        <div className="bg-white max-w-lg mx-auto my-6 p-3 flex flex-col items-center rounded-xl shadow-1">
             <div className='w-full flex justify-between'>
                 <button onClick={props.hide}>
                     <img className='w-10 h-10 hover:scale-125 duration-300 mb-4' src={arrowBack} alt="arrow back" />
